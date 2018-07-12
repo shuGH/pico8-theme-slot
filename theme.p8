@@ -27,7 +27,7 @@ frame = 0
 -- reel speed (line / sec)
 speed = 0
 speed_min = 0.4
-speed_max = 10
+speed_max = 16
 -- fixed reel
 fixed = false
 -- idle, spinning, pressed, decided
@@ -112,6 +112,8 @@ function update_reel(acc, decided)
 	end
 end
 
+-- update state ------------------------
+
 function _update_idle()
 	if     btnp(🅾️)==true then
 		move_state("spinning")
@@ -148,7 +150,7 @@ function _update_pressed()
 		return
 	end
 
-	update_reel(-2, true)
+	update_reel(-3, true)
 end
 
 function _update_decided()
@@ -160,6 +162,8 @@ function _update_decided()
 		return
 	end
 end
+
+-- update main ------------------------
 
 function _update()
  if     state == "idle" then
@@ -205,19 +209,21 @@ function draw_reel()
 	rect(
 		0,c.y+6,
 		127,c.y-6,
-		2
+		1
 	)
 end
+
+-- draw state ------------------------
 
 function _draw_idle()
 	draw_reel()
 
-	rectfill(0,c.y-28,128,c.y-20,1)
-	rectfill(0,c.y+20,128,c.y+28,1)
+	rectfill(0,c.y-26,128,c.y-18,1)
+	rectfill(0,c.y+18,128,c.y+26,1)
 	
-	printm("-- what's a theme --", 64, 28, 8)
+	printm("-- what's a theme --", 64, 26, 6)
  blink(function ()
-		printm("press 🅾️ button", 64, 100, 8)
+		printm("press 🅾️ button", 64, 100, 6)
  end, 1.0, 1.0)
 end
 
@@ -226,7 +232,7 @@ function _draw_spinning()
 
 	if frame >= 60 then
   blink(function ()
- 		printm("press 🅾️ button", 64, 100, 8)
+ 		printm("press 🅾️ button", 64, 100, 6)
   end, 0.2, 0.2)
 	end
 end
@@ -238,12 +244,14 @@ end
 function _draw_decided()
 	draw_reel()
 
-	rectfill(0,c.y-28,128,c.y-20,1)
-	rectfill(0,c.y+20,128,c.y+28,1)
+	rectfill(0,c.y-26,128,c.y-18,10)
+	rectfill(0,c.y+18,128,c.y+26,10)
 
-	printm("this jam's theme is...", 64+4, 28, 8)
-	printm("press 🅾️ button", 64, 100, 8)
+	printm("this jam's theme is...", 64+4, 26, 6)
+	printm("press 🅾️ button", 64, 100, 6)
 end
+
+-- draw main ------------------------
 
 function _draw_debug()
  color(11)
